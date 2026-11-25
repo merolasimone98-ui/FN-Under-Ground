@@ -128,24 +128,41 @@ kbd{font-family:var(--mono);font-weight:700;font-size:14px;color:#140e05;backgro
 
 #p-credits{background:rgba(0,0,0,.15);overflow:hidden;padding:0}
 #p-credits .roll{position:absolute;left:50%;top:100%;width:min(640px,90vw);text-align:center;transform:translate(-50%,0)}
-#p-credits.open .roll{animation:roll 30s linear infinite}
+#p-credits.open .roll{animation:roll 52s linear infinite}
 @keyframes roll{from{transform:translate(-50%,0)}to{transform:translate(-50%,calc(-100vh - 100%))}}
-.roll h3{font-family:var(--display);font-weight:400;font-size:clamp(36px,5vw,64px);color:var(--sodium);line-height:1;margin-bottom:60px;text-shadow:0 0 24px rgba(0,0,0,.9)}
-.roll .role{font-style:italic;color:var(--bone-dim);font-size:17px;margin-top:44px}
-.roll .name{font-family:var(--display);font-size:clamp(26px,3vw,38px);letter-spacing:.05em;color:var(--bone);text-shadow:0 2px 12px #000}
-.roll .end{margin-top:120px;font-style:italic;color:var(--bone-dim)}
+.roll h3{font-family:var(--display);font-weight:400;font-size:clamp(40px,5.4vw,72px);color:var(--sodium);line-height:1;text-shadow:0 0 24px rgba(0,0,0,.9);padding-bottom:18vh}
+.roll .block{padding:20vh 0}
+.roll .role{font-family:var(--body);font-variant:small-caps;letter-spacing:.14em;color:var(--sodium);font-size:clamp(17px,1.6vw,22px)}
+.roll .name{font-family:var(--display);font-size:clamp(30px,3.4vw,46px);letter-spacing:.05em;color:var(--bone);text-shadow:0 2px 12px #000;margin-top:14px}
+.roll .sep{width:240px;height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,rgba(217,152,47,.65),transparent);position:relative}
+.roll .sep::after{content:"";position:absolute;left:50%;top:-4px;width:8px;height:8px;background:#d9982f;transform:translateX(-50%) rotate(45deg)}
+.roll .end{padding:24vh 0 12vh;font-style:italic;color:var(--bone-dim);font-size:18px}
 #credBack{position:absolute;left:clamp(14px,2.2vw,30px);top:clamp(14px,2.2vh,26px);z-index:2}
 
 #overName{color:var(--sodium)}
-#p-settings{background:transparent;align-items:flex-start;padding-top:max(56px,9vh)}
-#p-settings .sheet{background:radial-gradient(ellipse at 50% 35%,#13241d,#050b08 80%);border:0;border-radius:12px;box-shadow:inset 0 0 70px rgba(0,0,0,.85);color:#cfe6dc;max-height:calc(100vh - 150px)}
-#p-settings .sheet::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:12px;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px)}
-#p-settings h2{color:#8fd6b9;text-shadow:0 0 12px rgba(120,220,180,.35)}
-#p-settings .set output{color:#8fd6b9}
-#p-settings input[type=range]{accent-color:#5fbf98}
-#p-settings select{background:#0d1a15;border-color:#2c4a3e;color:#cfe6dc}
-#p-settings .btn{background:#0d1a15;border-color:#2c4a3e;color:#cfe6dc}
-#p-settings .btn:hover{border-color:#8fd6b9;color:#8fd6b9}
+#p-settings{background:transparent;align-items:flex-end;padding:0 2vw 2vh}
+#p-settings .sheet{background:none;border:0;box-shadow:none;width:min(1120px,96vw);max-height:76vh;overflow:visible;padding:0;transform:perspective(1300px) rotateX(24deg) translateY(40px);transform-origin:50% 100%}
+#p-settings.open .sheet{transform:perspective(1300px) rotateX(24deg)}
+#p-settings h2{display:inline-block;background:#b9ad8a;color:#3a1a10;padding:.2em .6em;transform:rotate(-2deg);box-shadow:0 8px 14px rgba(0,0,0,.6);font-size:clamp(26px,3vw,40px);margin-bottom:18px}
+#p-settings .sheet{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px}
+#p-settings .row.back{margin:0 0 18px;order:1}
+#p-settings h2{order:0}
+#setGrid{order:2;flex:1 1 100%;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px 20px}
+.card{position:relative;padding:13px 14px 9px;background:#d6c9ab;color:#2a2018;box-shadow:0 12px 18px rgba(0,0,0,.65);transform:rotate(var(--r,0deg))}
+.card::before{content:"";position:absolute;left:50%;top:-8px;width:54px;height:16px;transform:translateX(-50%) rotate(-3deg);background:rgba(220,210,170,.55)}
+.card.metal{background:linear-gradient(#55574f,#2e302b);color:#e6dcc4;border:1px solid #191a17}
+.card.metal::before{width:9px;height:9px;border-radius:50%;background:#8a8c84;left:12px;top:8px;transform:none}
+.card label{display:block;font-family:var(--display);font-size:17px;letter-spacing:.03em;margin-bottom:8px;padding-right:50px}
+.card output{position:absolute;right:12px;top:14px;font-family:var(--mono);font-weight:700;color:#8e2a1c}
+.card.metal output{color:#e0b060}
+.card input[type=range]{accent-color:#8e2a1c}
+.card select{width:100%;background:#efe6d2;border:1px solid #6b5a40;color:#2a2018;padding:6px;font-size:15px}
+#p-settings .row .btn{background:#2a1d14;border-color:#6b4a2a;transform:rotate(1.2deg)}
+@media (max-width:640px){#p-settings .sheet,#p-settings.open .sheet{transform:none;max-height:calc(100vh - 32px);overflow:auto}}
+#bsBtns button.locked{opacity:.5}
+#bsBtns button.locked:hover{transform:rotateY(22deg);color:var(--bone);border-left-color:#4a4a3a}
+#bsBtns button.shake{animation:shake .35s}
+@keyframes shake{25%{transform:rotateY(22deg) translateX(-6px)}75%{transform:rotateY(22deg) translateX(6px)}}
 .clock6{font-family:var(--display);font-size:clamp(90px,14vw,170px);line-height:1;height:1em;overflow:hidden;display:inline-block;vertical-align:top;color:var(--bone)}
 .clock6 .col{display:flex;flex-direction:column;transition:transform 1s cubic-bezier(.7,0,.2,1) .9s}
 .clock6 .col span{height:1em;display:block}
@@ -181,7 +198,7 @@ kbd{font-family:var(--mono);font-weight:700;font-size:14px;color:#140e05;backgro
     <button style="--i:4" data-open="p-credits" data-i18n="credits"></button>
     <button style="--i:5" data-open="p-guide" data-i18n="guide"></button>
   </nav>
-  <div id="sig">@Simone Merola • 2026</div>
+  <div id="sig">Simone Merola • 2026</div>
 </div>
 <div id="hint" data-i18n="audioHint"></div>
 
@@ -190,7 +207,7 @@ kbd{font-family:var(--mono);font-weight:700;font-size:14px;color:#140e05;backgro
   <nav class="tilted" id="bsBtns">
     <button style="--i:0" id="bNew"><span data-i18n="newGame"></span><small data-i18n="newGameSub"></small></button>
     <button style="--i:1" id="bCont"><span data-i18n="continue"></span><small id="contSub"></small></button>
-    <button style="--i:2" id="bCustom"><span data-i18n="custom"></span><small data-i18n="customSub"></small></button>
+    <button style="--i:2" id="bCustom"><span data-i18n="custom"></span><small id="custSub"></small></button>
     <button style="--i:3" id="bBack" class="back" data-i18n="back"></button>
   </nav>
 </div>
@@ -236,7 +253,7 @@ kbd{font-family:var(--mono);font-weight:700;font-size:14px;color:#140e05;backgro
 <section class="panel" id="p-settings">
   <div class="sheet small" style="width:min(660px,100%)">
     <h2 data-i18n="settingsT"></h2>
-    <div class="set" id="setGrid"></div>
+    <div id="setGrid"></div>
     <div class="row back"><button class="btn" id="setReset" data-i18n="reset"></button><button class="btn" data-close data-i18n="back"></button></div>
   </div>
 </section>
@@ -245,10 +262,15 @@ kbd{font-family:var(--mono);font-weight:700;font-size:14px;color:#140e05;backgro
   <button class="btn" id="credBack" data-close data-i18n="back"></button>
   <div class="roll">
     <h3>Five night's<br>Under Ground</h3>
-    <div class="role" data-i18n="crDir"></div><div class="name">Simone Merola</div>
-    <div class="role" data-i18n="crProg"></div><div class="name">Simone Merola</div>
-    <div class="role" data-i18n="crMon"></div><div class="name">Simone Merola</div>
-    <div class="role" data-i18n="crSound"></div><div class="name">Simone Merola</div>
+    <div class="sep"></div>
+    <div class="block"><div class="role" data-i18n="crFounder"></div><div class="name">Simone Merola</div></div>
+    <div class="sep"></div>
+    <div class="block"><div class="role" data-i18n="crProg"></div><div class="name">Simone Merola</div></div>
+    <div class="sep"></div>
+    <div class="block"><div class="role" data-i18n="crMon"></div><div class="name">Simone Merola</div></div>
+    <div class="sep"></div>
+    <div class="block"><div class="role" data-i18n="crSound"></div><div class="name">Simone Merola</div></div>
+    <div class="sep"></div>
     <div class="end" data-i18n="crEnd"></div>
   </div>
 </section>
@@ -275,6 +297,14 @@ kbd{font-family:var(--mono);font-weight:700;font-size:14px;color:#140e05;backgro
     <h2 data-i18n="caught"></h2>
     <p><span id="overText"></span> <span id="overNight"></span></p>
     <div class="row center"><button class="btn primary" id="overRetry" data-i18n="retry"></button><button class="btn" id="overMenu" data-i18n="mainMenu"></button></div>
+  </div>
+</section>
+
+<section class="panel" id="p-end">
+  <div class="sheet small center">
+    <h2 data-i18n="endT"></h2>
+    <p data-i18n="endMsg"></p>
+    <div class="row center"><button class="btn primary" id="endBack" data-i18n="toBackstage"></button><button class="btn" id="endMenu" data-i18n="mainMenu"></button></div>
   </div>
 </section>
 
@@ -391,7 +421,7 @@ tip2:['Senza ventilatore la temperatura sale, più in fretta se chiudi entrambe 
 tip3:['Se la temperatura resta sopra i 100° troppo a lungo, qualcosa esce dai condotti.','If the temperature stays above 100° for too long, something comes out of the ducts.','Si la temperatura pasa de 100° demasiado tiempo, algo sale de los conductos.','Bleibt die Temperatur zu lange über 100°, kommt etwas aus den Schächten.','Если температура слишком долго держится выше 100°, что-то выйдет из вентиляции.'],
 tip4:['Thorne resta fermo finché lo guardi sulla CAM 4. Marrow striscia nel condotto e arriva alla ventola frontale.','Thorne stays still while you watch him on CAM 4. Marrow crawls through the duct to the front vent.','Thorne no se mueve mientras lo miras en la CAM 4. Marrow se arrastra por el conducto hasta la rejilla frontal.','Thorne bleibt stehen, solange du ihn auf CAM 4 beobachtest. Marrow kriecht durch den Schacht zum vorderen Gitter.','Торн не двигается, пока вы смотрите на него в CAM 4. Марроу ползёт по каналу к переднему вентканалу.'],
 crDir:['Ideato e diretto da','Created and directed by','Creado y dirigido por','Idee und Regie','Автор и режиссёр'],
-crProg:['Programmazione','Programming','Programación','Programmierung','Программирование'],
+crProg:['Programmatore','Programmer','Programador','Programmierer','Программист'],
 crMon:['Mostri e ambientazione','Monsters and setting','Monstruos y ambientación','Monster und Schauplatz','Монстры и мир'],
 crSound:['Suono','Sound','Sonido','Ton','Звук'],
 crEnd:['Grazie per essere sceso fin quaggiù.','Thanks for coming all the way down here.','Gracias por bajar hasta aquí.','Danke, dass du bis hier unten gekommen bist.','Спасибо, что спустились так глубоко.'],
@@ -437,6 +467,24 @@ power:['Energia','Power','Energía','Strom','Энергия'],
 kX:['Indossa o togli la maschera. Puoi usare anche la barra in basso a sinistra.','Put the mask on or take it off. You can also use the bar at the bottom left.','Ponte o quítate la máscara. También puedes usar la barra de abajo a la izquierda.','Maske auf- oder absetzen. Du kannst auch die Leiste unten links benutzen.','Надеть или снять маску. Можно также нажать на полосу внизу слева.'],
 tip5:['Hollow non si ferma con le porte: quando è nell\'ufficio indossa la maschera e tienila finché se ne va. Con la maschera non puoi usare il monitor.','Doors do not stop Hollow: when he is in the office, wear the mask until he leaves. You cannot use the monitor with the mask on.','Las puertas no detienen a Hollow: cuando esté en la oficina, ponte la máscara hasta que se vaya. Con la máscara no puedes usar el monitor.','Türen halten Hollow nicht auf: Ist er im Büro, trag die Maske, bis er geht. Mit Maske kannst du den Monitor nicht benutzen.','Двери не остановят Холлоу: когда он в офисе, носите маску, пока он не уйдёт. В маске монитором пользоваться нельзя.'],
 skipV:['Tieni premuto V per saltare','Hold V to skip','Mantén V para saltar','V gedrückt halten zum Überspringen','Удерживайте V, чтобы пропустить'],
+crFounder:['Fondatore','Founder','Fundador','Gründer','Основатель'],
+s1a:['Primo turno. Mi hanno detto solo di non lasciare l\'ufficio.','First shift. All they told me was not to leave the office.','Primer turno. Solo me dijeron que no saliera de la oficina.','Erste Schicht. Man sagte mir nur, ich soll das Büro nicht verlassen.','Первая смена. Мне сказали лишь не покидать офис.'],
+s1b:['Le macchine dovrebbero essere spente.','The machines are supposed to be switched off.','Se supone que las máquinas están apagadas.','Die Maschinen sollten eigentlich abgeschaltet sein.','Машины должны быть выключены.'],
+s2a:['Seconda notte. Nelle registrazioni c\'è qualcosa che ieri non c\'era.','Second night. The recordings show something that was not there yesterday.','Segunda noche. En las grabaciones hay algo que ayer no estaba.','Zweite Nacht. Auf den Aufnahmen ist etwas, das gestern nicht da war.','Вторая ночь. На записях есть то, чего вчера не было.'],
+s2b:['Il sipario del secondo palco è socchiuso.','The curtain on the second stage is ajar.','El telón del segundo escenario está entreabierto.','Der Vorhang der zweiten Bühne steht einen Spalt offen.','Занавес второй сцены приоткрыт.'],
+s3a:['Nel backstage ho trovato i registri del 1987.','In the backstage I found the logbooks from 1987.','En los bastidores encontré los registros de 1987.','Im Backstage habe ich die Protokolle von 1987 gefunden.','За сценой я нашёл журналы 1987 года.'],
+s3b:['Cinque guardie. Nessuna ha finito il turno.','Five guards. None of them finished the shift.','Cinco guardias. Ninguno terminó el turno.','Fünf Wachleute. Keiner hat die Schicht beendet.','Пять охранников. Никто не закончил смену.'],
+s4a:['Le caldaie si accendono da sole. Fa sempre più caldo.','The boilers switch on by themselves. It keeps getting hotter.','Las calderas se encienden solas. Hace cada vez más calor.','Die Kessel springen von selbst an. Es wird immer heißer.','Котлы включаются сами. Становится всё жарче.'],
+s4b:['Qualcosa respira nei condotti.','Something is breathing in the ducts.','Algo respira en los conductos.','Etwas atmet in den Schächten.','Что-то дышит в вентиляции.'],
+s5a:['Ultima notte. Domattina la pizzeria verrà sigillata.','Last night. Tomorrow morning the pizzeria will be sealed.','Última noche. Mañana por la mañana sellarán la pizzería.','Letzte Nacht. Morgen früh wird die Pizzeria versiegelt.','Последняя ночь. Утром пиццерию опечатают.'],
+s5b:['Sono tutti svegli.','They are all awake.','Todos están despiertos.','Sie sind alle wach.','Они все проснулись.'],
+e1:['Alle 6 la porta blindata si apre.','At 6 AM the vault door opens.','A las 6 se abre la puerta blindada.','Um 6 Uhr öffnet sich die Panzertür.','В 6 утра открывается бронированная дверь.'],
+e2:['Risalgo in superficie. Sotto terra, qualcosa continua a muoversi.','I climb back to the surface. Under ground, something keeps moving.','Vuelvo a la superficie. Bajo tierra, algo sigue moviéndose.','Ich steige zurück an die Oberfläche. Unter der Erde bewegt sich weiter etwas.','Я поднимаюсь на поверхность. Под землёй что-то продолжает двигаться.'],
+endT:['Fine','The End','Fin','Ende','Конец'],
+endMsg:['Complimenti, hai finito il gioco! Ora puoi giocare la Custom Night.','Congratulations, you have finished the game! You can now play the Custom Night.','¡Enhorabuena, has terminado el juego! Ya puedes jugar la Noche personalizada.','Glückwunsch, du hast das Spiel beendet! Jetzt kannst du die eigene Nacht spielen.','Поздравляем, вы прошли игру! Теперь доступна Особая ночь.'],
+toBackstage:['Vai al Backstage','Go to Backstage','Ir a bastidores','Zum Backstage','За кулисы'],
+contStory:['Continua','Continue','Continuar','Weiter','Далее'],
+lockedCustom:['Bloccata: si sblocca completando la Notte 5.','Locked: unlocks when you complete Night 5.','Bloqueada: se desbloquea al completar la Noche 5.','Gesperrt: wird nach Abschluss von Nacht 5 freigeschaltet.','Закрыта: откроется после прохождения Ночи 5.'],
 i1:['Assunto per il turno di notte.','Hired for the night shift.','Contratado para el turno de noche.','Eingestellt für die Nachtschicht.','Нанят на ночную смену.'],
 i2:['La pizzeria è più in basso di quanto pensassi.','The pizzeria is further down than I thought.','La pizzería está más abajo de lo que pensaba.','Die Pizzeria liegt tiefer, als ich dachte.','Пиццерия оказалась глубже, чем я думал.'],
 i3:['Dietro la porta, qualcuno aspettava.','Behind the door, someone was waiting.','Detrás de la puerta, alguien esperaba.','Hinter der Tür wartete jemand.','За дверью кто-то ждал.'],
@@ -452,7 +500,7 @@ mr_rattina:['Cantante, palco principale','Singer, main stage','Cantante, escenar
 mr_lombro:['Chitarrista, palco principale','Guitarist, main stage','Guitarrista, escenario principal','Gitarrist, Hauptbühne','Гитарист, главная сцена'],
 mr_gino:['Tastierista, palco principale','Keyboard player, main stage','Teclista, escenario principal','Keyboarder, Hauptbühne','Клавишник, главная сцена'],
 mr_minatore:['Secondo palco, Grotta dei Racconti','Second stage, Story Cave','Segundo escenario, Cueva de los Cuentos','Zweite Bühne, Märchenhöhle','Вторая сцена, Пещера сказок'],
-mr_bollente:['Nei condotti di ventilazione','In the ventilation ducts','En los conductos de ventilación','In den Lüftungsschächten','В вентиляционных каналах'],
+mr_bollente:['Detto "il Bollente", nei condotti di ventilazione','Known as "the Boiling One", in the ventilation ducts','Llamado "el Hirviente", en los conductos de ventilación','Genannt "der Kochende", in den Lüftungsschächten','Прозванный «Кипящим», в вентиляции'],
 mr_mistero:['Non ancora sceso','Not yet come down','Aún no ha bajado','Noch nicht herabgestiegen','Ещё не спустился'],
 md_talpo:['Sotto le piastre consumate del petto girano ancora gli ingranaggi. La lampada sul casco non si è mai spenta. Arriva dalla porta sinistra.','Behind the worn chest plates the gears still turn. The lamp on his helmet never went out. He comes to the left door.','Tras las placas gastadas del pecho aún giran los engranajes. La lámpara de su casco nunca se apagó. Llega por la puerta izquierda.','Hinter den abgenutzten Brustplatten drehen sich noch die Zahnräder. Die Lampe an seinem Helm ist nie erloschen. Er kommt zur linken Tür.','За стёртыми пластинами груди всё ещё вращаются шестерни. Лампа на каске так и не погасла. Приходит к левой двери.'],
 md_rattina:['Metà del volto è caduta e sotto c\'è il cranio di metallo. Il microfono è staccato, ma lei canta ancora. Arriva dalla porta destra.','Half her face has fallen away, showing the metal skull beneath. The microphone is unplugged, yet she still sings. She comes to the right door.','Media cara se le ha caído y debajo asoma el cráneo metálico. El micrófono está desconectado, pero sigue cantando. Llega por la puerta derecha.','Die Hälfte ihres Gesichts ist abgefallen, darunter der Metallschädel. Das Mikrofon ist ausgesteckt, doch sie singt weiter. Sie kommt zur rechten Tür.','Половина лица отвалилась, под ней металлический череп. Микрофон отключён, но она всё ещё поёт. Приходит к правой двери.'],
@@ -462,7 +510,7 @@ md_minatore:['Un occhio gli pende dai cavi. Resta fermo finché lo guardi sulla 
 md_bollente:['Una caldaia con le braccia. Non lo vedrai arrivare: se la temperatura resta sopra i 100° troppo a lungo, è già nell\'ufficio.','A boiler with arms. You will not see him coming: if the temperature stays above 100° for too long, he is already in the office.','Una caldera con brazos. No lo verás llegar: si la temperatura pasa de 100° demasiado tiempo, ya está en la oficina.','Ein Heizkessel mit Armen. Du siehst ihn nicht kommen: Bleibt die Temperatur zu lange über 100°, ist er schon im Büro.','Котёл с руками. Вы не увидите, как он придёт: если температура слишком долго выше 100°, он уже в офисе.'],
 md_mistero:['Nessuno sa cosa sia. Lo si intravede solo dietro Cinder, ai margini della luce.','Nobody knows what it is. It is only glimpsed behind Cinder, at the edge of the light.','Nadie sabe qué es. Solo se intuye detrás de Cinder, al borde de la luz.','Niemand weiß, was es ist. Man erahnt es nur hinter Cinder, am Rand des Lichts.','Никто не знает, что это. Его можно заметить лишь за Синдером, на краю света.']
 };
-const TX_US={kZ:'Flashlight: shines straight ahead, toward the front vent.',r_restroom:'Restrooms',r_westhall:'West Hall',r_easthall:'East Hall',r_vent:'Air Duct',kMouse:'Move the cursor toward the edges to look around. Click the doors, lights, vent, fan and monitor in the office.',sMon:'Camera monitor volume',winAll:'You survived all five nights. For now, all is quiet underground.',n5:'Underground'};
+const TX_US={e2:'I climb back to the surface. Underground, something keeps moving.',kZ:'Flashlight: shines straight ahead, toward the front vent.',r_restroom:'Restrooms',r_westhall:'West Hall',r_easthall:'East Hall',r_vent:'Air Duct',kMouse:'Move the cursor toward the edges to look around. Click the doors, lights, vent, fan and monitor in the office.',sMon:'Camera monitor volume',winAll:'You survived all five nights. For now, all is quiet underground.',n5:'Underground'};
 let LANG='it';
 try{const l=localStorage.getItem('fnug_lang');if(l&&LI[l]!=null)LANG=l;}catch(e){}
 function t(key,vars){
@@ -1075,18 +1123,22 @@ function stickers(c,seed,x,y,w,h,n){
     c.restore();}
 }
 function rSetRoom(c){
-  wallFloor(c,301,'#16120f','#0b0908',520,'#1a1410','#090706',false);
-  pipe(c,0,40,1280,16,'#2a2622');cables(c,302,60,7);vpipe(c,30,0,16,520,'#2a2622');
-  const ps=[['talpo','pFest','#3a2a1c',60,110,-.06],['rattina','pSing','#3a1f2a',200,150,.05],['gino','pKeys','#1d2a2e',1000,100,.04],['minatore','pBeat','#2b2233',1140,170,-.05],['lombro','pSolo','#2b2233',1080,330,.03],['bollente','sStay','#2a1206',80,320,-.03]];
-  for(const [id,k,bg,x,y,r] of ps)poster(c,x,y,110,150,id,t(k),bg,r);
-  stickers(c,303,0,0,1280,520,30);kidsDrawing(c,330,420,60,44,304,.07);kidsDrawing(c,960,430,56,42,305,-.06);
-  const g=c.createLinearGradient(0,520,0,720);g.addColorStop(0,'#2a2018');g.addColorStop(1,'#120c08');P(c,[120,540,1160,540,1280,720,0,720],g);
-  c.fillStyle='#3a2c20';c.fillRect(120,534,1040,10);grain(c,306,0,540,1280,180,1500);
-  stickers(c,307,160,560,960,140,22);
-  c.fillStyle='#5a4a32';c.fillRect(180,600,150,24);c.fillStyle='rgba(150,40,30,.5)';c.font='13px Impact';c.textAlign='center';c.fillText('PIZZA',255,617);
-  E(c,1060,620,46,56,'#2a2622');E(c,1044,604,10,8,'#050505');E(c,1076,604,10,8,'#050505');P(c,[1052,640,1068,640,1060,652],'#050505');
-  drawMonster(c,'talpo',930,640,.12,0,{eye:0,dark:.2});E(c,320,580,16,8,'#3a3a36');
-  for(let i=0;i<3;i++)wire(c,[560+i*60,540,520+i*50,620,600+i*30,720],'rgba(5,5,5,.9)',4);
+  let g=c.createLinearGradient(0,0,0,300);g.addColorStop(0,'#15110e');g.addColorStop(1,'#0c0907');c.fillStyle=g;c.fillRect(0,0,1280,300);
+  grain(c,301,0,0,1280,300,1800);stains(c,302,0,0,1280,300,8);
+  pipe(c,0,22,1280,14,'#2a2622');cables(c,303,40,6);
+  const ps=[['talpo','pFest','#3a2a1c',70,60,-.06],['rattina','pSing','#3a1f2a',230,80,.05],['gino','pKeys','#1d2a2e',960,62,.04],['minatore','pBeat','#2b2233',1110,90,-.05],['bollente','sStay','#2a1206',560,70,-.02]];
+  for(const [id,k,bg,x,y,r] of ps)poster(c,x,y,100,140,id,t(k),bg,r);
+  stickers(c,304,0,40,1280,240,24);kidsDrawing(c,420,150,60,44,305,.07);kidsDrawing(c,820,140,56,42,306,-.06);
+  g=c.createLinearGradient(0,290,0,720);g.addColorStop(0,'#1e160f');g.addColorStop(1,'#3a2a1c');P(c,[160,290,1120,290,1460,720,-180,720],g);
+  for(let i=1;i<9;i++)L(c,[lerp(160,1120,i/9),290,lerp(-180,1460,i/9),720],2,'rgba(0,0,0,.35)');
+  c.fillStyle='#4a3626';c.fillRect(150,284,980,8);
+  grain(c,307,0,290,1280,430,3000);stains(c,308,100,320,1080,380,10);stickers(c,309,60,330,1160,380,40);
+  c.save();c.translate(120,560);c.rotate(-.2);c.fillStyle='#5a4a32';c.fillRect(-90,-60,180,120);c.fillStyle='rgba(150,40,30,.5)';c.font='22px Impact';c.textAlign='center';c.fillText('PIZZA',0,8);c.restore();
+  E(c,1170,540,60,72,'#2a2622');E(c,1150,520,13,10,'#050505');E(c,1190,520,13,10,'#050505');P(c,[1160,560,1180,560,1170,576],'#050505');
+  drawMonster(c,'talpo',1120,700,.16,0,{eye:0,dark:.25});
+  E(c,90,690,30,14,'#3a3a36');E(c,90,686,22,9,'#1a1a18');
+  for(let i=0;i<3;i++)wire(c,[300+i*40,290,260+i*60,500,320+i*30,720],'rgba(5,5,5,.85)',4);
+  c.fillStyle='#1b1a16';c.fillRect(980,210,40,90);E(c,1000,204,46,18,'#2a2822');
 }
 /* ufficio: muro (1920x800) e scrivania in primo piano (strato separato, parallasse) */
 const OFF={doorL:[60,180,260,500],doorR:[1600,180,260,500],vent:[850,420,220,120]};
@@ -1308,8 +1360,8 @@ function winNight(){
   mode='win';gameLoopsOff();syncMusic();SFX.chime();
   const n=G.night;let txt;
   if(n==='custom'){txt=t('winCustom');$('#winNext').style.display='none';}
-  else if(n<5){setProg(Math.max(getProg(),n+1));txt=t('winNext',{n,m:n+1});$('#winNext').style.display='';}
-  else{try{localStorage.setItem('fnug_completed','1');}catch(e){}txt=t('winAll');$('#winNext').style.display='none';}
+  else if(n<5){setProg(Math.max(getProg(),n+1));txt=t('winNext',{n,m:n+1});$('#winNext').style.display='';$('#winNext').textContent=t('nextNight');}
+  else{try{localStorage.setItem('fnug_completed','1');}catch(e){}txt=t('winAll');$('#winNext').style.display='';$('#winNext').textContent=t('contStory');}
   $('#winText').textContent=txt;openPanel('p-win');
 }
 function updateGame(dt){
@@ -1323,8 +1375,7 @@ function updateGame(dt){
   g.lflick=Math.max(0,g.lflick-dt);if(g.lflick<=0&&Math.random()<dt*.5)g.lflick=.04+Math.random()*.08;
   if(!g.cam&&P_.inside){
     const fx=P_.x/CW,fy=P_.y/CH;
-    if(fx<.22)g.pan-=(.22-fx)/.22*950*dt;else if(fx>.78)g.pan+=(fx-.78)/.22*950*dt;
-    if(fy<.16)g.panY-=(.16-fy)/.16*220*dt;else if(fy>.84)g.panY+=(fy-.84)/.16*220*dt;
+    if(fx<.22)g.pan-=(.22-fx)/.22*1250*dt;else if(fx>.78)g.pan+=(fx-.78)/.22*1250*dt;
     g.pan=clamp(g.pan,0,640);g.panY=clamp(g.panY,0,80);
   }
   if(!g.powerOut){const u=usage();g.power-=(.064+.006*g.diff+.082*(u-1))*dt;if(g.power<=0)startPowerOut();}
@@ -1424,66 +1475,138 @@ function renderCreditsBg(){
   ctx.restore();if(Math.random()<.04){ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,1280,720);}
   ctx.setTransform(1,0,0,1,0,0);overlayGrain(.09);vignette(.85);
 }
-/* ---------- filmato iniziale ---------- */
+/* ---------- filmati tra le notti: la storia avanza ---------- */
 const CUT_LEN=14;
+const PLOT={
+  1:{sc:['stairs','hall','endo'],cap:['s1a','s1b']},
+  2:{sc:['tape','curtain','hall'],cap:['s2a','s2b']},
+  3:{sc:['papers','endo','hall'],cap:['s3a','s3b']},
+  4:{sc:['boiler','vent','tape'],cap:['s4a','s4b']},
+  5:{sc:['stairs','stage','endo'],cap:['s5a','s5b']},
+  custom:{sc:['hall','stage','vent'],cap:[]},
+  ending:{sc:['door','dawn','stage'],cap:['e1','e2']}
+};
+const SCENE={
+  stairs(p,k){
+    const bob=Math.sin(k*7)*6,off=(k*1.4)%1,vx=640,vy=250+bob;ctx.fillStyle='#0a0b09';ctx.fillRect(0,0,1280,720);
+    P(ctx,[0,0,420,vy-60,420,vy+300,0,720],'#16140f');P(ctx,[1280,0,860,vy-60,860,vy+300,1280,720],'#16140f');
+    for(let i=7;i>=0;i--){const d=(i+off)/8,y=lerp(vy+40,780,1-d),w=lerp(440,1300,1-d),h=lerp(6,60,1-d);ctx.fillStyle=i%2?'#2a251c':'#221e17';ctx.fillRect(vx-w/2,y,w,h);ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(vx-w/2,y,w,2);}
+    pipe(ctx,0,60+bob,1280,14,'#22241f');vpipe(ctx,300,0,16,720,'#22241f');
+    const fl=Math.random()<.08?.2:1;ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(640,120+bob,10,640,300,560);g.addColorStop(0,`rgba(255,210,140,${.22*fl})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,1280,720);ctx.restore();
+    ctx.fillStyle=`rgba(0,0,0,${.12+p*.18})`;ctx.fillRect(0,0,1280,720);
+  },
+  hall(p,k){
+    const z=1+p*.55;ctx.save();ctx.translate(640,360);ctx.scale(z,z);ctx.translate(-640,-360);safeDraw(ctx,BG.westhall,0,0,1280,720);
+    if(p>.35){const e=Math.sin(k*5)>-.2?1:.1;drawMonster(ctx,'talpo',600,420,.14,k,{eye:e,dark:.92});drawMonster(ctx,'gino',690,420,.13,k+3,{eye:p>.6?e:0,dark:.94});}
+    for(let i=0;i<3;i++)gear(ctx,40+i*36,300+i*30,22,k*(i%2?-1:1),'#3a3c37');ctx.restore();
+    ctx.save();ctx.globalAlpha=Math.random()<.15?.15:.8;ctx.font='54px Impact';ctx.textAlign='center';ctx.fillStyle='#8a2a1c';ctx.shadowColor='#e0442a';ctx.shadowBlur=20;ctx.fillText('PIZZA SOTTOTERRA',640,110);ctx.restore();
+    if(Math.random()<.06){ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(0,0,1280,720);}
+  },
+  endo(p,k){
+    const z=1.15+p*.35;ctx.save();ctx.translate(820,420);ctx.scale(z,z);ctx.translate(-820,-420);safeDraw(ctx,BG.backstage,0,0,1280,720);ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(0,0,1280,720);
+    const look=p>.5;drawMonster(ctx,'endo',860,610,.78,look?k*3:1,{pose:'sit',eye:look?1:(p>.3?.25:0),dark:.35,tilt:look?-.3:.12});ctx.restore();
+    if(p>.85&&Math.random()<.4){ctx.fillStyle='#000';ctx.fillRect(0,0,1280,720);}
+  },
+  tape(p,k){
+    safeDraw(ctx,BG.dining,0,0,1280,720);
+    if(p>.45)drawMonster(ctx,'rattina',640+Math.sin(k)*4,600,.5,k,{eye:Math.sin(k*7)>0?1:.3,dark:.6});
+    ctx.fillStyle='rgba(30,70,55,.38)';ctx.fillRect(0,0,1280,720);
+    for(let i=0;i<6;i++){ctx.fillStyle='rgba(220,230,220,.08)';ctx.fillRect(0,Math.random()*720,1280,3+Math.random()*10);}
+    ctx.font='bold 28px "Courier New", monospace';ctx.fillStyle='#d9cfb7';ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText('PLAY',40,60);
+    ctx.beginPath();ctx.moveTo(126,40);ctx.lineTo(146,52);ctx.lineTo(126,64);ctx.closePath();ctx.fill();
+    ctx.textAlign='right';ctx.fillText('03:14:'+String(Math.floor(k*10)%60).padStart(2,'0'),1240,60);
+    ctx.save();ctx.globalAlpha=.22;safeDraw(ctx,NOISE[(k*24|0)%NOISE.length],0,0,320,180,0,0,1280,720);ctx.restore();
+  },
+  curtain(p,k){
+    const z=1.05+p*.25;ctx.save();ctx.translate(640,380);ctx.scale(z,z);ctx.translate(-640,-380);safeDraw(ctx,BG.grotta,0,0,1280,720);
+    drawMonster(ctx,'minatore',618,575,.68,k,{eye:Math.sin(k*5)>-.5?.8:0,dark:.8});curtains(ctx,.06+p*.12);
+    ctx.fillStyle='rgba(0,0,0,.45)';ctx.fillRect(0,0,1280,720);ctx.restore();
+  },
+  papers(p,k){
+    ctx.fillStyle='#1a120c';ctx.fillRect(0,0,1280,720);grain(ctx,601,0,0,1280,720,1500);
+    const r=rng(55);
+    for(let i=0;i<9;i++){ctx.save();ctx.translate(200+r()*880,140+r()*440);ctx.rotate((r()-.5)*.8);ctx.fillStyle='#bfb294';ctx.fillRect(-110,-80,220,160);ctx.fillStyle='rgba(40,30,20,.6)';for(let l=0;l<8;l++)ctx.fillRect(-90,-60+l*16,150+((l*31)%40),2);ctx.font='20px "Courier New", monospace';ctx.fillStyle='rgba(120,30,20,.8)';ctx.textAlign='left';ctx.fillText(i%3===0?'1987':'#'+(i+1),-90,-66);ctx.restore();}
+    ctx.save();ctx.translate(820,330);ctx.rotate(.15);ctx.fillStyle='#dcd3bd';ctx.fillRect(-120,-80,240,160);ctx.fillStyle='#2a2622';ctx.fillRect(-108,-68,216,120);
+    for(let i=0;i<5;i++){E(ctx,-80+i*40,-20,10,12,'#0e0d0c');ctx.fillStyle='#0e0d0c';ctx.fillRect(-92+i*40,-8,24,50);L(ctx,[-92+i*40,-34,-68+i*40,40],3,'rgba(150,30,20,.75)');}
+    ctx.restore();
+    const tx=lerp(260,900,p),ty=330+Math.sin(k*1.3)*80,dg=ctx.createRadialGradient(tx,ty,40,tx,ty,260);dg.addColorStop(0,'rgba(0,0,0,0)');dg.addColorStop(1,'rgba(0,0,0,.93)');ctx.fillStyle=dg;ctx.fillRect(0,0,1280,720);
+  },
+  boiler(p,k){
+    const z=1.1+p*.3,pu=.6+.4*Math.sin(k*4);ctx.save();ctx.translate(240,420);ctx.scale(z,z);ctx.translate(-240,-420);safeDraw(ctx,BG.kitchen,0,0,1280,720);ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(0,0,1280,720);
+    ctx.save();ctx.globalCompositeOperation='lighter';const og=ctx.createRadialGradient(240,430,5,240,420,260);og.addColorStop(0,`rgba(255,110,20,${.55*pu})`);og.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=og;ctx.fillRect(0,160,600,500);ctx.restore();ctx.restore();
+    ctx.font='40px Impact';ctx.fillStyle=`rgba(224,83,60,${.5+.5*pu})`;ctx.textAlign='right';ctx.textBaseline='alphabetic';ctx.fillText(Math.round(88+p*20)+'°',1230,680);
+  },
+  vent(p,k){
+    const z=1+p*.35;ctx.save();ctx.translate(640,360);ctx.scale(z,z);ctx.translate(-640,-360);safeDraw(ctx,BG.vent,0,0,1280,720);
+    ctx.save();ctx.globalCompositeOperation='lighter';const vg=ctx.createRadialGradient(640,360,5,640,360,220);vg.addColorStop(0,`rgba(255,100,20,${.25+.3*p})`);vg.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=vg;ctx.fillRect(380,120,520,480);ctx.restore();
+    drawMonster(ctx,'bollente',640,410,.12+p*.08,k,{eye:.4+p*.4,dark:.85});ctx.restore();
+  },
+  stage(p,k){
+    const z=1.08+p*.15;ctx.save();ctx.translate(640,420);ctx.scale(z,z);ctx.translate(-640,-420);safeDraw(ctx,BG.stage,0,0,1280,720);ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(0,0,1280,720);
+    const on=Math.sin(k*9)>-.4?1:.25,look=p>.55?-.25:0;
+    [['talpo',0],['rattina',1],['lombro',2],['gino',3]].forEach(([id,i])=>{const sl=SLOTS.stage[i];drawMonster(ctx,id,sl[0],sl[1],sl[2],k*.6+i,{eye:p>.25?on:0,dark:.75,tilt:look*(i%2?1:-1)});});
+    ctx.restore();if(p>.85&&Math.random()<.35){ctx.fillStyle='#000';ctx.fillRect(0,0,1280,720);}
+  },
+  door(p,k){introDoor(p,k);},
+  dawn(p,k){
+    const g=ctx.createLinearGradient(0,0,0,560);g.addColorStop(0,'#1c2438');g.addColorStop(.7,'#6a4a52');g.addColorStop(1,'#c07a4a');ctx.fillStyle=g;ctx.fillRect(0,0,1280,560);
+    ctx.fillStyle='#14120f';ctx.fillRect(0,560,1280,160);ctx.fillStyle='#231c17';ctx.fillRect(700,150,580,410);
+    for(let y=150;y<560;y+=22)for(let x=700+((y/22)%2)*24;x<1280;x+=48){ctx.fillStyle='rgba(0,0,0,.3)';ctx.fillRect(x,y,46,2);ctx.fillRect(x,y,2,20);}
+    ctx.fillStyle='#030303';ctx.fillRect(860,330,160,230);ctx.strokeStyle='#2a2a26';ctx.lineWidth=8;ctx.strokeRect(856,326,168,238);
+    ctx.font='34px Impact';ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.fillStyle='#3a1410';ctx.fillText('PIZZA SOTTOTERRA',940,296);
+    drawGuard(ctx,lerp(930,200,p),560,.95,k*7,-1);
+    if(p>.6){const e=(p-.6)*2.5*(Math.sin(k*8)>0?1:.3);glow(ctx,925,430,4,'255,96,40',e);glow(ctx,955,430,4,'255,96,40',e);}
+  }
+};
+function sceneSound(n){
+  switch(n){
+    case 'stairs':SFX.steps(-.2,6,.3,480);break;
+    case 'hall':SFX.whisper();SFX.creak();break;
+    case 'endo':SFX.servo(.2,.08);setTimeout(()=>{SFX.servo(.2,.1);metal(240,{vol:.12,dur:1});},1800);break;
+    case 'tape':SFX.glitch();noiz({type:'bandpass',f:2400,q:.5,dur:3,vol:.04,dest:A.mon});break;
+    case 'curtain':SFX.creak();break;
+    case 'papers':noiz({type:'bandpass',f:3000,q:1,dur:.4,vol:.05});SFX.drip();break;
+    case 'boiler':SFX.heat();break;
+    case 'vent':SFX.hiss();noiz({type:'bandpass',f:420,q:3,dur:1.5,vol:.08});break;
+    case 'stage':SFX.servo(0,.08);setTimeout(()=>SFX.servo(.3,.08),900);break;
+    case 'door':SFX.creak();noiz({type:'bandpass',f:300,f2:900,q:4,dur:1.6,vol:.15});break;
+    case 'dawn':noiz({type:'highpass',f:2500,dur:3.5,vol:.03,a:.5});break;
+  }
+}
 function cue(name,fn){if(!CUT.cues[name]){CUT.cues[name]=1;fn();}}
+function finishCut(){if(CUT.night==='ending')endStory();else startNight(CUT.night);}
+function endStory(){try{localStorage.setItem('fnug_completed','1');}catch(e){}mode='end';CUT=null;vHeld=null;gameLoopsOff();syncMusic();openPanel('p-end');}
 function updateCutscene(dt){
   CUT.t+=dt;const k=CUT.t;
-  if(vHeld&&performance.now()-vHeld>=3000){vHeld=null;startNight(CUT.night);return;}
-  if(!A.ctx){if(k>=CUT_LEN)startNight(CUT.night);return;}
-  for(let i=0;i<8;i++)if(k>.3+i*.5)cue('st'+i,()=>SFX.step(i%2?.3:-.3,.35));
-  if(k>4.6)cue('door',()=>{noiz({type:'bandpass',f:300,f2:900,q:6,dur:1.4,vol:.12});SFX.creak();});
-  if(k>6.5)cue('eyes',()=>SFX.whisper());
-  if(k>9.2)cue('servo',()=>SFX.servo(.2,.07));
-  if(k>10.8)cue('look',()=>{SFX.servo(.2,.1);metal(240,{vol:.12,dur:1});});
-  if(k>12.1)cue('hit',()=>{metal(90,{vol:.3,dur:1.6});tone({type:'sawtooth',f:120,f2:40,dur:.9,vol:.2,lp:600});});
-  if(k>=CUT_LEN)startNight(CUT.night);
+  if(vHeld&&performance.now()-vHeld>=3000){vHeld=null;finishCut();return;}
+  if(A.ctx){
+    const sc=PLOT[CUT.night].sc,idx=Math.min(2,Math.floor(k/4.1));
+    cue('sc'+idx,()=>sceneSound(sc[idx]));
+    if(k>12.1)cue('hit',()=>{metal(90,{vol:.3,dur:1.6});tone({type:'sawtooth',f:120,f2:40,dur:.9,vol:.2,lp:600});});
+  }
+  if(k>=CUT_LEN)finishCut();
 }
 function caption(text,alpha){
   if(alpha<=0)return;const fs=Math.round(clamp(CW/DPR*.024,16,30)*DPR);
   ctx.save();ctx.globalAlpha=alpha;ctx.font=`italic ${fs}px Georgia, serif`;ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.fillStyle='#d9cfb7';ctx.shadowColor='#000';ctx.shadowBlur=10*DPR;ctx.fillText(text,CW/2,CH*.86,CW*.9);ctx.restore();
 }
 function renderCutscene(){
-  const k=CUT.t,V=view();ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#000';ctx.fillRect(0,0,CW,CH);
+  const k=CUT.t,V=view(),st=PLOT[CUT.night],f=x=>clamp(x,0,1);
+  ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#000';ctx.fillRect(0,0,CW,CH);
   ctx.setTransform(V.s,0,0,V.s,V.ox,V.oy);
-  if(k<4.6){
-    const p=k/4.6,bob=Math.sin(k*7)*6,off=(k*1.4)%1;
-    ctx.fillStyle='#0a0b09';ctx.fillRect(0,0,1280,720);
-    const vx=640,vy=250+bob;
-    P(ctx,[0,0,420,vy-60,420,vy+300,0,720],'#16140f');P(ctx,[1280,0,860,vy-60,860,vy+300,1280,720],'#16140f');
-    for(let i=7;i>=0;i--){const d=(i+off)/8,y=lerp(vy+40,780,1-d),w=lerp(440,1300,1-d),h=lerp(6,60,1-d);ctx.fillStyle=i%2?'#2a251c':'#221e17';ctx.fillRect(vx-w/2,y,w,h);ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(vx-w/2,y,w,2);}
-    pipe(ctx,0,60+bob,1280,14,'#22241f');vpipe(ctx,300,0,16,720,'#22241f');
-    const fl=Math.random()<.08?.2:1;ctx.save();ctx.globalCompositeOperation='lighter';const g=ctx.createRadialGradient(640,120+bob,10,640,300,560);g.addColorStop(0,`rgba(255,210,140,${.22*fl})`);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,1280,720);ctx.restore();
-    ctx.fillStyle=`rgba(0,0,0,${.12+p*.18})`;ctx.fillRect(0,0,1280,720);
-  }else if(k<9){
-    const p=(k-4.6)/4.4,z=1+p*.55;ctx.save();ctx.translate(640,360);ctx.scale(z,z);ctx.translate(-640,-360);
-    safeDraw(ctx,BG.westhall,0,0,1280,720);
-    if(p>.35){const e=Math.sin(k*5)>-.2?1:.1;drawMonster(ctx,'talpo',600,420,.14,k,{eye:e,dark:.92});drawMonster(ctx,'gino',690,420,.13,k+3,{eye:p>.6?e:0,dark:.94});}
-    for(let i=0;i<3;i++)gear(ctx,40+i*36,300+i*30,22,k*(i%2?-1:1),'#3a3c37');
-    ctx.restore();
-    ctx.save();ctx.globalAlpha=Math.random()<.15?.15:.8;ctx.font='54px Impact';ctx.textAlign='center';ctx.fillStyle='#8a2a1c';ctx.shadowColor='#e0442a';ctx.shadowBlur=20;ctx.fillText('PIZZA SOTTOTERRA',640,110);ctx.restore();
-    if(Math.random()<.06){ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(0,0,1280,720);}
-  }else if(k<12.2){
-    const p=(k-9)/3.2,z=1.15+p*.35;ctx.save();ctx.translate(820,420);ctx.scale(z,z);ctx.translate(-820,-420);
-    safeDraw(ctx,BG.backstage,0,0,1280,720);ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(0,0,1280,720);
-    const look=k>10.8;drawMonster(ctx,'endo',860,610,.78,look?k*3:1,{pose:'sit',eye:look?1:(k>10?.25:0),dark:.35,tilt:look?-.3:.12});
-    ctx.restore();
-    if(k>11.6&&Math.random()<.4){ctx.fillStyle='#000';ctx.fillRect(0,0,1280,720);}
-  }else{
-    ctx.setTransform(1,0,0,1,0,0);
-    const a=clamp((k-12.5)/.6,0,1)*clamp((CUT_LEN-k)/.4,0,1);
-    ctx.globalAlpha=a;ctx.fillStyle='#d9cfb7';ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.font=`${Math.round(64*DPR)}px Impact, sans-serif`;ctx.fillText('12 AM',CW/2,CH*.46);
-    ctx.font=`italic ${Math.round(22*DPR)}px Georgia, serif`;ctx.fillStyle='#9d9582';ctx.fillText(nightLabel(CUT.night),CW/2,CH*.56);ctx.globalAlpha=1;
+  if(k<12.3){const i=Math.min(2,Math.floor(k/4.1)),p=clamp((k-i*4.1)/4.1,0,1);SCENE[st.sc[i]](p,k);}
+  ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;
+  if(k>=12.3){
+    const a=f((k-12.5)/.6)*f((CUT_LEN-k)/.4);ctx.globalAlpha=a;ctx.textAlign='center';ctx.textBaseline='middle';
+    if(CUT.night==='ending'){ctx.font=`${Math.round(64*DPR)}px Impact, sans-serif`;ctx.fillStyle='#d9982f';ctx.fillText(t('endT'),CW/2,CH*.5);}
+    else{ctx.font=`${Math.round(64*DPR)}px Impact, sans-serif`;ctx.fillStyle='#d9cfb7';ctx.fillText('12 AM',CW/2,CH*.46);ctx.font=`italic ${Math.round(22*DPR)}px Georgia, serif`;ctx.fillStyle='#9d9582';ctx.fillText(nightLabel(CUT.night),CW/2,CH*.56);}
+    ctx.globalAlpha=1;
   }
-  ctx.setTransform(1,0,0,1,0,0);
-  const fade=x=>clamp(x,0,1);
-  const bl=Math.max(fade(1-k/.6),fade(1-Math.abs(k-4.6)/.35),fade(1-Math.abs(k-9)/.35),fade(1-Math.abs(k-12.2)/.3));
+  const bl=Math.max(f(1-k/.6),f(1-Math.abs(k-4.1)/.35),f(1-Math.abs(k-8.2)/.35),f(1-Math.abs(k-12.3)/.3));
   if(bl>0){ctx.fillStyle=`rgba(0,0,0,${bl})`;ctx.fillRect(0,0,CW,CH);}
-  const cap=(s,a,b)=>caption(s,fade((k-a)/.4)*fade((b-k)/.4));
-  cap(t('cut1'),.8,4.2);cap(t('cut2'),5.1,8.6);cap(t('cut3'),9.5,12);
-  overlayGrain(.1);vignette(.85);
-  vRing();
+  const cap=(str,a,b)=>caption(str,f((k-a)/.4)*f((b-k)/.4));
+  if(st.cap[0])cap(t(st.cap[0]),.8,4);if(st.cap[1])cap(t(st.cap[1]),4.9,8);
+  overlayGrain(.1);vignette(.85);vRing();
 }
 /* ---------- ufficio ---------- */
 function btnLamp(c,x,y,on,col,hover){
@@ -1742,20 +1865,11 @@ function rrect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.qu
 /* ---------- stanza delle impostazioni: schermo sul tavolo ---------- */
 function renderSettingsRoom(){
   const V=view();ctx.setTransform(V.s,0,0,V.s,V.ox,V.oy);safeDraw(ctx,BG.setroom,0,0,1280,720);
-  const fl=Math.random()<.03?.4:1;
-  const dg=ctx.createRadialGradient(640,330,80,640,360,820);dg.addColorStop(0,`rgba(0,0,0,${.15+(1-fl)*.4})`);dg.addColorStop(1,'rgba(0,0,0,.85)');ctx.fillStyle=dg;ctx.fillRect(0,0,1280,720);
-  ctx.setTransform(1,0,0,1,0,0);
-  const el=document.querySelector('#p-settings .sheet');if(!el)return;const r=el.getBoundingClientRect();
-  const pad=26*DPR,x=r.left*DPR-pad,y=r.top*DPR-pad,w=r.width*DPR+pad*2,h=r.height*DPR+pad*2;
-  if(!(w>0&&h>0))return;
-  ctx.fillStyle='#121210';ctx.fillRect(CW/2-50*DPR,y+h,100*DPR,Math.max(0,CH*.88-(y+h)));ctx.fillRect(CW/2-130*DPR,Math.max(y+h,CH*.88-12*DPR),260*DPR,14*DPR);
-  ctx.save();ctx.shadowColor='rgba(110,190,160,.25)';ctx.shadowBlur=60*DPR;
-  const bg=ctx.createLinearGradient(0,y,0,y+h);bg.addColorStop(0,'#2c2d29');bg.addColorStop(1,'#141512');ctx.fillStyle=bg;rrect(ctx,x,y,w,h,18*DPR);ctx.fill();ctx.restore();
-  ctx.strokeStyle='#3a3b35';ctx.lineWidth=2*DPR;rrect(ctx,x+4*DPR,y+4*DPR,w-8*DPR,h-8*DPR,14*DPR);ctx.stroke();
-  const sr=rng(77);for(let i=0;i<8;i++){const sx=x+(i%2?w-pad*.5:pad*.5),sy=y+pad+sr()*(h-pad*2);ctx.save();ctx.translate(sx,sy);ctx.rotate((sr()-.5)*.7);ctx.globalAlpha=.7;ctx.fillStyle=['#b0403a','#c8a840','#3f8a80','#7a4a8a'][i%4];ctx.fillRect(-9*DPR,-6*DPR,18*DPR,12*DPR);ctx.restore();}
-  E(ctx,x+w-40*DPR,y+h-12*DPR,4*DPR,4*DPR,Math.sin(T*2)>0?'#7fdc6a':'#2a4a2a');
-  ctx.font=`${Math.round(11*DPR)}px "Courier New", monospace`;ctx.fillStyle='rgba(217,207,183,.35)';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('SOTTOTERRA SYSTEMS',x+20*DPR,y+h-12*DPR);
-  overlayGrain(.06);vignette(.6);
+  const fl=Math.random()<.03?.45:1;
+  ctx.save();ctx.globalCompositeOperation='lighter';const lg=ctx.createRadialGradient(1000,215,10,760,520,640);lg.addColorStop(0,`rgba(255,210,150,${.2*fl})`);lg.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=lg;ctx.fillRect(0,0,1280,720);ctx.restore();
+  const dg=ctx.createRadialGradient(640,520,120,640,460,820);dg.addColorStop(0,`rgba(0,0,0,${.1+(1-fl)*.4})`);dg.addColorStop(1,'rgba(0,0,0,.88)');ctx.fillStyle=dg;ctx.fillRect(0,0,1280,720);
+  glow(ctx,1000,216,10,'255,210,150',.5*fl);
+  ctx.setTransform(1,0,0,1,0,0);overlayGrain(.06);vignette(.55);
 }
 /* ---------- filmato all'apertura del gioco ---------- */
 const INTRO_LEN=20.5;
@@ -1938,21 +2052,23 @@ function buildNights(){
   }
   $('#nightsLead').textContent=t('nightsLead');
 }
-function updateContSub(){$('#contSub').textContent=t('contSub',{n:getProg()});}
+function isDone(){try{return localStorage.getItem('fnug_completed')==='1';}catch(e){return false;}}
+function updateContSub(){$('#contSub').textContent=t('contSub',{n:getProg()});const d=isDone();$('#bCustom').classList.toggle('locked',!d);$('#custSub').textContent=d?t('customSub'):t('lockedCustom');}
 const SETS=[['master','sMaster',0,100],['jump','sJump',0,100],['sfx','sSfx',0,100],['mon','sMon',0,100],['music','sMusic',0,100],['bright','sBright',50,150],['zoom','sZoom',100,140],['vhs','sVhs',0,100]];
 function buildSettings(){
   const grid=$('#setGrid');grid.textContent='';
-  const ll=document.createElement('label');ll.htmlFor='set-lang';ll.textContent=t('sLang');
+  const card=(i,metal)=>{const d=document.createElement('div');d.className='card'+(metal?' metal':'');d.style.setProperty('--r',((((i*37)%7)-3)*.7).toFixed(1)+'deg');grid.appendChild(d);return d;};
+  const lc=card(0,false),ll=document.createElement('label');ll.htmlFor='set-lang';ll.textContent=t('sLang');
   const sel=document.createElement('select');sel.id='set-lang';for(const [code,name] of LANGS){const o=document.createElement('option');o.value=code;o.textContent=name;if(code===LANG)o.selected=true;sel.appendChild(o);}
-  sel.addEventListener('change',()=>setLang(sel.value));grid.append(ll,sel);
-  for(const [k,key,mn,mx] of SETS){
-    const id='set-'+k,lb=document.createElement('label');lb.htmlFor=id;lb.textContent=t(key);
+  sel.addEventListener('change',()=>setLang(sel.value));lc.append(ll,sel);
+  SETS.forEach(([k,key,mn,mx],i)=>{
+    const d=card(i+1,i%3===1),id='set-'+k,lb=document.createElement('label');lb.htmlFor=id;lb.textContent=t(key);
     const inp=document.createElement('input');inp.type='range';inp.id=id;inp.min=mn;inp.max=mx;inp.step=1;inp.value=S[k];
     const out=document.createElement('output');out.htmlFor=id;out.textContent=S[k]+'%';
     inp.addEventListener('input',()=>{S[k]=+inp.value;out.textContent=S[k]+'%';saveS();applyVolumes();applyBright();});
     inp.addEventListener('change',()=>{if(!A.ctx)return;if(k==='jump')metal(300,{vol:.25,dur:.6,dest:A.js});else if(k==='mon')SFX.camUp();else SFX.ui();});
-    grid.append(lb,inp,out);
-  }
+    d.append(lb,out,inp);
+  });
 }
 function buildGuide(){
   const dl=$('#keys');dl.textContent='';
@@ -1992,7 +2108,7 @@ function openPanel(id){
 }
 function closePanel(id){const p=document.getElementById(id);if(!p)return;p.classList.remove('open');const i=stack.indexOf(id);if(i>=0)stack.splice(i,1);if((id==='p-credits'||id==='p-settings')&&mode==='menu'){$('#menu').classList.remove('hidden');if(id==='p-settings'){TRANS=.9;SFX.trans();}}}
 function closeAll(){[...stack].forEach(closePanel);}
-function closeTop(){const id=stack[stack.length-1];if(!id)return false;if(id==='p-over'||id==='p-win')return true;if(id==='p-confirm')confirmCb=null;closePanel(id);SFX.ui();return true;}
+function closeTop(){const id=stack[stack.length-1];if(!id)return false;if(id==='p-over'||id==='p-win'||id==='p-end')return true;if(id==='p-confirm')confirmCb=null;closePanel(id);SFX.ui();return true;}
 let confirmCb=null;
 function askConfirm(title,text,yes,cb){$('#cTitle').textContent=title;$('#cText').textContent=text;$('#cYes').textContent=yes||t('confirm');confirmCb=cb;openPanel('p-confirm');}
 $('#cYes').addEventListener('click',()=>{const cb=confirmCb;confirmCb=null;closePanel('p-confirm');if(cb)cb();});
@@ -2006,14 +2122,16 @@ document.querySelectorAll('#bsBtns button').forEach(b=>b.addEventListener('mouse
 document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>{const p=b.closest('.panel');if(p){closePanel(p.id);SFX.ui();}}));
 $('#bNew').addEventListener('click',()=>askConfirm(t('cNewT'),t('cNew'),t('confirm'),()=>{setProg(1);startCutscene(1);}));
 $('#bCont').addEventListener('click',()=>openPanel('p-nights'));
-$('#bCustom').addEventListener('click',()=>openPanel('p-custom'));
+$('#bCustom').addEventListener('click',()=>{if(!isDone()){const b=$('#bCustom');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');SFX.ui();return;}openPanel('p-custom');});
 $('#bBack').addEventListener('click',()=>transTo(goMenu));
 $('#custStart').addEventListener('click',()=>askConfirm(t('cCustT'),t('cCust'),t('confirm'),()=>startCutscene('custom')));
 $('#setReset').addEventListener('click',()=>{Object.assign(S,DEF);saveS();buildSettings();applyVolumes();applyBright();SFX.ui();});
 $('#overRetry').addEventListener('click',()=>askConfirm(t('cRetryT'),t('cRetry'),t('confirm'),()=>startCutscene(lastNight)));
 $('#overMenu').addEventListener('click',goMenu);
-$('#winNext').addEventListener('click',()=>{const n=Math.min(5,lastNight+1);askConfirm(t('cContT'),t('cCont',{n,name:nightName(n),diff:diffName(n)}),t('confirm'),()=>startCutscene(n));});
+$('#winNext').addEventListener('click',()=>{if(lastNight===5){closeAll();startCutscene('ending');return;}const n=Math.min(5,lastNight+1);askConfirm(t('cContT'),t('cCont',{n,name:nightName(n),diff:diffName(n)}),t('confirm'),()=>startCutscene(n));});
 $('#winMenu').addEventListener('click',goMenu);
+$('#endBack').addEventListener('click',goBackstage);
+$('#endMenu').addEventListener('click',goMenu);
 
 /* ---------- input ---------- */
 addEventListener('keydown',e=>{
