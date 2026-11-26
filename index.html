@@ -1405,6 +1405,11 @@ function phantomFX(){
 }
 function sealNode(i){if(!G||!canAct())return;G.seal=G.seal===i?-1:i;SFX.ventShut(G.seal===i);}
 function ductPulse(){if(!G||!canAct())return;if(G.pulseCD>0){SFX.deny();return;}G.pulseCD=10;noiz({type:'bandpass',f:180,f2:60,q:2,dur:.6,vol:.25});tone({f:70,f2:40,dur:.5,vol:.2});const m=G.mons.lombro;if(m.loc==='vent'){if((m.vNode||0)>0)m.vNode--;else{m.loc='kitchen';m.vNode=0;}}else if(m.loc==='doorV'){m.loc='vent';m.vNode=2;m.state='roam';m.timer=MOVE_INT.lombro*1.2;}}
+/* scarica della batteria (% al secondo). Una porta chiusa costa poco per qualche secondo, poi sempre di più:
+   chiudere solo quando serve conviene, tenere tutto chiuso svuota l'energia in circa 60-90 secondi. */
+const DRAIN={base:.05,door:.26,doorMax:.6,vent:.28,cam:.12,fan:.09,light:.12,torch:.12};
+function doorCost(t){return DRAIN.door+Math.min(DRAIN.doorMax,Math.max(0,t-6)*.07);}
+function drainRate(){const g=G;if(!g||g.powerOut)return 0;return DRAIN.base+.003*g.diff+(g.doorL?doorCost(g.dLt):0)+(g.doorR?doorCost(g.dRt):0)+(g.ventC?DRAIN.vent:0)+(g.cam?DRAIN.cam:0)+(g.fan?DRAIN.fan:0)+(g.light?DRAIN.light:0)+(g.torch?DRAIN.torch:0);}
 function usage(){const g=G;if(!g||g.powerOut)return 0;return 1+(g.doorL?1:0)+(g.doorR?1:0)+(g.ventC?1:0)+(g.light?1:0)+(g.torch?1:0)+(g.cam?1:0)+(g.fan?1:0);}
 function hourLabel(){const h=G?G.hour:0;return h===0?'12 AM':h+' AM';}
 function canAct(){return G&&mode==='game'&&!G.powerOut&&!G.bollente&&!stack.length;}
@@ -1473,7 +1478,7 @@ function updateMon(m,dt){
     else if(m.doorT>Math.max(1.6,3.4-g.diff*.3))jumpscare(m.id);
   }else if(m.state==='door'){
     if(m.inside){if(!g.cam)jumpscare(m.id);else if((m.insideT+=dt)>6){g.cam=false;jumpscare(m.id);}return;}
-    if(closed){m.state='blocked';m.blockT=0;m.blockNeed=3.2+Math.random()*2.8;return;}
+    if(closed){m.state='blocked';m.blockT=0;m.blockNeed=1.8+Math.random()*1.7;return;}
     m.doorT+=dt;
     if(m.doorT>attackDelay()){if(g.cam){m.inside=true;m.insideT=0;}else jumpscare(m.id);}
   }else if(m.state==='blocked'){
@@ -1490,12 +1495,12 @@ function updateMina(dt){
       if(k.watchT<=0&&Math.random()*20<k.ai+Math.floor(G.hour/2)){k.stage++;SFX.servo(-.5,.03);if(k.stage>=3){k.state='run';k.runT=0;k.runDur=Math.max(2.2,4.2-G.diff*.35);SFX.run();}}}
   }else if(k.state==='run'){
     k.runT+=dt;
-    if(k.runT>=k.runDur){if(G.doorL){k.bangs++;SFX.bang(-.9,3);G.power=Math.max(0,G.power-(1+k.bangs));k.state='idle';k.stage=0;k.timer=7;}else jumpscare('minatore');}
+    if(k.runT>=k.runDur){if(G.doorL){k.bangs++;SFX.bang(-.9,3);G.power=Math.max(0,G.power-2);k.state='idle';k.stage=0;k.timer=7;}else jumpscare('minatore');}
   }
 }
 function startBollente(){G.bollente={t:0};if(G.cam){G.cam=false;SFX.camDown();}G.light=null;SFX.heat();}
 function startPowerOut(){
-  const g=G;g.power=0;g.powerOut={t:0,phase:0,next:4+Math.random()*6,dur:6+Math.random()*6};
+  const g=G;g.power=0;g.powerOut={t:0,phase:0,next:2+Math.random()*2,dur:4+Math.random()*2};
   if(g.doorL)SFX.doorOpen(-.8);if(g.doorR)SFX.doorOpen(.8);
   g.doorL=g.doorR=g.ventC=g.fan=false;g.light=null;g.torch=false;g.cam=false;SFX.powerOut();
 }
@@ -1522,7 +1527,8 @@ function updateGame(dt){
     if(fx<.22)g.pan-=(.22-fx)/.22*1250*dt;else if(fx>.78)g.pan+=(fx-.78)/.22*1250*dt;
     g.pan=clamp(g.pan,0,640);g.panY=clamp(g.panY,0,80);
   }
-  if(!g.powerOut){const u=usage();g.power-=(.049+.0042*g.diff+.07*(u-1))*dt;if(g.power<=0)startPowerOut();}
+  g.dLt=g.doorL?(g.dLt||0)+dt:0;g.dRt=g.doorR?(g.dRt||0)+dt:0;
+  if(!g.powerOut){g.power-=drainRate()*dt;if(g.power<=0)startPowerOut();}
   const bl=g.lv.bollente,rate=bl>0?.3+bl*.04:.32;
   if(g.fan&&!g.powerOut)g.temp=Math.max(58,g.temp-1.25*dt);
   else g.temp+=(rate+(g.doorL&&g.doorR?.18:0)+(g.ventC?.15:0)+(g.powerOut?.3:0))*dt;
