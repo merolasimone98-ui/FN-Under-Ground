@@ -79,7 +79,7 @@ button,select{font:inherit;color:inherit;background:none;border:0;cursor:pointer
 /* ---------- pannelli ---------- */
 .panel{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(4,5,3,.74);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s;z-index:20}
 .panel.open{opacity:1;visibility:visible;transition:opacity .35s ease}
-.sheet{position:relative;width:min(940px,100%);max-height:calc(100vh - 32px);overflow:auto;background:linear-gradient(180deg,#191c15,#0f110d);border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.75),inset 0 0 0 6px #0b0c09,inset 0 0 0 7px #2a2d23;padding:clamp(20px,3vw,38px);transform:translateY(18px) scale(.985);transition:transform .45s cubic-bezier(.2,.8,.2,1);scrollbar-color:#3a3d31 transparent}
+.sheet{position:relative;width:min(940px,100%);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;background:linear-gradient(180deg,#191c15,#0f110d);border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.75),inset 0 0 0 6px #0b0c09,inset 0 0 0 7px #2a2d23;padding:clamp(20px,3vw,38px);transform:translateY(18px) scale(.985);transition:transform .45s cubic-bezier(.2,.8,.2,1);scrollbar-color:#3a3d31 transparent}
 .panel.open .sheet{transform:none}
 .sheet.small{width:min(540px,100%)}
 .sheet h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,3.4vw,46px);color:var(--sodium);letter-spacing:.03em;margin-bottom:.35em;line-height:1}
@@ -202,6 +202,43 @@ kbd{font-family:var(--mono);font-weight:700;font-size:14px;color:#140e05;backgro
   .flk,#hint{animation:none}
   #p-credits.open .roll{animation-duration:60s}
   .sheet,.tilted button{transition:none}
+}
+/* schermi bassi (telefono in orizzontale): menù, backstage e pannelli interamente visibili */
+@media (max-height:500px), (orientation:landscape) and (pointer:coarse) and (max-height:560px){
+  .screen{height:100dvh}
+  #title{top:max(6px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));transform:rotate(-1.5deg)}
+  #title .t1{font-size:clamp(15px,4.6dvh,22px)}
+  #title .t2{font-size:clamp(26px,10dvh,44px)}
+  #title .soil{height:5px}
+  .tilted{top:max(84px,25dvh);bottom:auto;left:max(14px,env(safe-area-inset-left));gap:clamp(4px,1.6dvh,10px);max-height:calc(100dvh - max(84px,25dvh) - 30px);overflow-y:auto;overflow-x:hidden;padding:2px 40px 6px 2px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .tilted button{font-size:clamp(14px,5dvh,20px);padding:.14em 1.1em .1em .5em;min-width:150px;flex:0 0 auto}
+  #sig{bottom:max(6px,env(safe-area-inset-bottom));left:max(14px,env(safe-area-inset-left));font-size:12px}
+  #hint{bottom:8px;font-size:12px}
+  #backstage .head{top:max(6px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left))}
+  #backstage h2{font-size:clamp(26px,10dvh,42px)}
+  #backstage .head p{margin-top:2px;font-size:12px}
+  #bsBtns{top:max(78px,24dvh);gap:clamp(5px,2dvh,12px)}
+  #bsBtns button{padding:.22em 1.1em .2em .55em}
+  #bsBtns button small{font-size:11px}
+  #bsBtns button.back{font-size:15px;margin-top:2px}
+  .panel{padding:8px}
+  .sheet{padding:14px 16px;max-height:calc(100dvh - 16px)}
+  .sheet h2{font-size:clamp(22px,7dvh,30px)}
+  .sheet .lead{margin-bottom:10px;font-size:14px}
+  .row{margin-top:12px}
+  .back{margin-top:12px}
+  .night{padding:8px 6px}
+  .night b{font-size:22px}
+  #p-settings{align-items:center;padding:8px}
+  #p-settings .sheet,#p-settings.open .sheet{transform:none;max-height:calc(100dvh - 16px);overflow:auto}
+  #setGrid{gap:10px 14px}
+  .card{padding:10px 12px 8px}
+  #credBack{top:8px;left:8px}
+  .cgrid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+  .crow{padding:6px;grid-template-columns:56px 1fr;gap:8px}
+  .crow canvas{width:56px;height:60px}
+  .presets{margin:0 0 10px}
+  .presets .btn{font-size:13px;padding:.3em .6em}
 }
 </style>
 </head>
