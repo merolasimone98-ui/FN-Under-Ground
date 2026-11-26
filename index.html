@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="description" content="Five night's Under Ground: survival horror in una pizzeria abbandonata sotto terra.">
 <title>Five night's Under Ground</title>
 <style>
@@ -19,8 +19,28 @@
   --mono:"Courier New",Courier,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--soot);color:var(--bone);overflow:hidden;font-family:var(--body)}
-#game{position:fixed;inset:0;display:block;width:100vw;height:100vh;touch-action:none;background:var(--soot)}
+html,body{height:100%;background:var(--soot);color:var(--bone);overflow:hidden;font-family:var(--body);overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+body.touch{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#game{position:fixed;inset:0;display:block;width:100vw;height:100vh;width:100dvw;height:100dvh;touch-action:none;background:var(--soot)}
+/* telefono in verticale: invito a ruotare */
+#rotate{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px;background:var(--soot);color:var(--bone);text-align:center;padding:24px}
+@media (orientation:portrait) and (pointer:coarse){#rotate{display:flex}}
+#rotate .phone{width:54px;height:92px;border:3px solid var(--sodium);border-radius:10px;position:relative;animation:rotph 2.6s ease-in-out infinite}
+#rotate .phone::after{content:"";position:absolute;left:50%;bottom:7px;width:14px;height:3px;border-radius:2px;background:var(--sodium);transform:translateX(-50%)}
+@keyframes rotph{0%,20%{transform:rotate(0)}50%,80%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
+#rotate p{font-family:var(--display);font-size:24px;letter-spacing:.04em;max-width:22ch;line-height:1.15}
+#rotate small{font-family:var(--body);font-style:italic;color:var(--bone-dim);font-size:14px}
+/* controlli touch: visibili solo su dispositivi touch, in partita */
+#touchUI{position:fixed;inset:0;pointer-events:none;z-index:8;display:none}
+body.touch.ingame #touchUI{display:block}
+.tcol{position:absolute;top:40%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px}
+.tcol.l{left:max(8px,env(safe-area-inset-left))}
+.tcol.r{right:max(8px,env(safe-area-inset-right))}
+.tbtn{pointer-events:auto;min-width:78px;padding:8px 6px;font-family:var(--display);font-size:13px;letter-spacing:.04em;color:var(--bone);background:rgba(14,16,13,.5);border:1px solid rgba(217,207,183,.3);border-radius:8px;touch-action:none;transition:background .12s,color .12s}
+.tbtn.on{background:rgba(217,152,47,.6);color:#140d02;border-color:var(--sodium)}
+#tTorch.on{background:rgba(255,236,180,.85);border-color:#fff3cf;box-shadow:0 0 18px 4px rgba(255,226,150,.55)}
+#tTorch.on::after{content:" ON"}
+#tExit{position:absolute;left:max(8px,env(safe-area-inset-left));top:8px;width:46px;height:46px;min-width:0;padding:0;border-radius:50%;font-size:18px;font-family:var(--mono)}
 button,select{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--sodium);outline-offset:3px}
 
@@ -201,6 +221,12 @@ kbd{font-family:var(--mono);font-weight:700;font-size:14px;color:#140e05;backgro
   <div id="sig">Simone Merola • 2026</div>
 </div>
 <div id="hint" data-i18n="audioHint"></div>
+<div id="rotate" role="alert"><div class="phone"></div><p data-i18n="rotate"></p><small>Five night's Under Ground</small></div>
+<div id="touchUI">
+  <button class="tbtn" id="tExit" aria-label="Menu">&#x2715;</button>
+  <div class="tcol l"><button class="tbtn" id="tDoorL" data-i18n="tDoorL"></button><button class="tbtn" id="tVent" data-i18n="tVent"></button><button class="tbtn" id="tTorch" data-i18n="tTorch"></button></div>
+  <div class="tcol r"><button class="tbtn" id="tDoorR" data-i18n="tDoorR"></button><button class="tbtn" id="tFan" data-i18n="tFan"></button></div>
+</div>
 
 <div id="backstage" class="screen hidden">
   <div class="head"><h2 data-i18n="bsTitle"></h2><p data-i18n="bsLead"></p></div>
@@ -466,6 +492,14 @@ r_vent:['Condotto Ventilazione','Ventilation Duct','Conducto de ventilación','L
 power:['Energia','Power','Energía','Strom','Энергия'],
 kX:['Indossa o togli la maschera. Puoi usare anche la barra in basso a sinistra.','Put the mask on or take it off. You can also use the bar at the bottom left.','Ponte o quítate la máscara. También puedes usar la barra de abajo a la izquierda.','Maske auf- oder absetzen. Du kannst auch die Leiste unten links benutzen.','Надеть или снять маску. Можно также нажать на полосу внизу слева.'],
 tip5:['Hollow non si ferma con le porte: quando è nell\'ufficio indossa la maschera e tienila finché se ne va. Con la maschera non puoi usare il monitor.','Doors do not stop Hollow: when he is in the office, wear the mask until he leaves. You cannot use the monitor with the mask on.','Las puertas no detienen a Hollow: cuando esté en la oficina, ponte la máscara hasta que se vaya. Con la máscara no puedes usar el monitor.','Türen halten Hollow nicht auf: Ist er im Büro, trag die Maske, bis er geht. Mit Maske kannst du den Monitor nicht benutzen.','Двери не остановят Холлоу: когда он в офисе, носите маску, пока он не уйдёт. В маске монитором пользоваться нельзя.'],
+skipT:['Tieni premuto lo schermo per saltare','Hold the screen to skip','Mantén pulsada la pantalla para saltar','Bildschirm gedrückt halten zum Überspringen','Удерживайте экран, чтобы пропустить'],
+rotate:['Ruota il telefono in orizzontale per giocare','Turn your phone sideways to play','Gira el teléfono en horizontal para jugar','Dreh dein Handy ins Querformat, um zu spielen','Поверните телефон горизонтально, чтобы играть'],
+audioHintT:['Tocca lo schermo per attivare l\'audio','Tap the screen to enable sound','Toca la pantalla para activar el sonido','Tippe auf den Bildschirm, um den Ton zu aktivieren','Коснитесь экрана, чтобы включить звук'],
+tDoorL:['Porta SX','Left door','Puerta izq.','Tür links','Левая дверь'],
+tDoorR:['Porta DX','Right door','Puerta der.','Tür rechts','Правая дверь'],
+tVent:['Ventola','Vent','Rejilla','Schacht','Вентканал'],
+tFan:['Ventilatore','Fan','Ventilador','Ventilator','Вентилятор'],
+tTorch:['Torcia','Torch','Linterna','Lampe','Фонарь'],
 skipV:['Tieni premuto V per saltare','Hold V to skip','Mantén V para saltar','V gedrückt halten zum Überspringen','Удерживайте V, чтобы пропустить'],
 crFounder:['Fondatore','Founder','Fundador','Gründer','Основатель'],
 s1a:['Primo turno. Mi hanno detto solo di non lasciare l\'ufficio.','First shift. All they told me was not to leave the office.','Primer turno. Solo me dijeron que no saliera de la oficina.','Erste Schicht. Man sagte mir nur, ich soll das Büro nicht verlassen.','Первая смена. Мне сказали лишь не покидать офис.'],
@@ -532,7 +566,7 @@ md_bollente:['Una caldaia con le braccia. Non lo vedrai arrivare: se la temperat
 md_phantom:['Copie spettrali di Kael, Vesper, Hollow e Thorne. Compaiono piano nell\'ufficio, più in fretta quando fa caldo: tieni premuto Z e punta la torcia su di loro finché svaniscono. Se si materializzano del tutto ti spaventano e ti lasciano al buio per qualche secondo.','Ghostly copies of Kael, Vesper, Hollow and Thorne. They slowly take shape in the office, faster when it is hot: hold Z and keep the torch on them until they fade. If one fully materialises it scares you and leaves you in the dark for a few seconds.','Copias espectrales de Kael, Vesper, Hollow y Thorne. Aparecen poco a poco en la oficina, más rápido con calor: mantén Z y apúntales con la linterna hasta que se desvanezcan. Si uno se materializa del todo, te asusta y te deja a oscuras unos segundos.','Geisterhafte Kopien von Kael, Vesper, Hollow und Thorne. Sie nehmen im Büro langsam Gestalt an, schneller bei Hitze: Halte Z und richte die Lampe auf sie, bis sie verblassen. Materialisiert sich eines ganz, erschreckt es dich und lässt dich einige Sekunden im Dunkeln.','Призрачные копии Каэла, Веспер, Холлоу и Торна. Медленно проявляются в офисе, быстрее в жару: удерживайте Z и держите луч на них, пока они не исчезнут. Если фантом проявится полностью, он напугает вас и на несколько секунд оставит в темноте.'],
 md_mistero:['Nessuno sa cosa sia. Se non resetti la ventilazione entro 5 secondi dall\'avviso, il buio si chiude e Null si rivela.','Nobody knows what it is. If you do not reset the ventilation within 5 seconds of the warning, the dark closes in and Null reveals itself.','Nadie sabe qué es. Si no reinicias la ventilación en 5 segundos tras el aviso, la oscuridad se cierra y Null se revela.','Niemand weiß, was es ist. Startest du die Lüftung nicht binnen 5 Sekunden nach der Warnung neu, wird es dunkel und Null zeigt sich.','Никто не знает, что это. Если не сбросить вентиляцию за 5 секунд после предупреждения, наступит тьма и появится Нулл.']
 };
-const TX_US={kZ:'Flashlight: hold Z for a beam that follows your cursor. It only drives away phantoms: keep it on them until they fade.',e2:'I climb back to the surface. Underground, something keeps moving.',r_restroom:'Restrooms',r_westhall:'West Hall',r_easthall:'East Hall',r_vent:'Air Duct',kMouse:'Move the cursor toward the edges to look around. Click the doors, lights, vent, fan and monitor in the office.',sMon:'Camera monitor volume',winAll:'You survived all five nights. For now, all is quiet underground.',n5:'Underground'};
+const TX_US={tTorch:'Flashlight',kZ:'Flashlight: hold Z for a beam that follows your cursor. It only drives away phantoms: keep it on them until they fade.',e2:'I climb back to the surface. Underground, something keeps moving.',r_restroom:'Restrooms',r_westhall:'West Hall',r_easthall:'East Hall',r_vent:'Air Duct',kMouse:'Move the cursor toward the edges to look around. Click the doors, lights, vent, fan and monitor in the office.',sMon:'Camera monitor volume',winAll:'You survived all five nights. For now, all is quiet underground.',n5:'Underground'};
 let LANG='it';
 try{const l=localStorage.getItem('fnug_lang');if(l&&LI[l]!=null)LANG=l;}catch(e){}
 function t(key,vars){
@@ -1316,7 +1350,10 @@ const cv=$('#game'),ctx=cv.getContext('2d');
 const BG={};
 const CAMB=mkCanvas(1280,720),CAMX=CAMB.getContext('2d');
 const NOISE=[];let scanPat=null;
-const P_={x:0,y:0,inside:false};
+const P_={x:0,y:0,inside:false,touch:false};
+const IS_TOUCH=!!(window.matchMedia&&matchMedia('(pointer:coarse)').matches);
+let TOUCH=null;
+function portraitTouch(){return IS_TOUCH&&window.innerHeight>window.innerWidth;}
 let escHeld=null,hoverObj=null,vHeld=null,TRANS=0,INTRO=null;
 
 function view(anchor,W,H){
@@ -1522,7 +1559,7 @@ function updateGame(dt){
   g.camGlitch=Math.max(0,g.camGlitch-dt);
   g.flick=Math.max(0,g.flick-dt);if(g.flick<=0&&Math.random()<dt*.15)g.flick=.05+Math.random()*.15;
   g.lflick=Math.max(0,g.lflick-dt);if(g.lflick<=0&&Math.random()<dt*.5)g.lflick=.04+Math.random()*.08;
-  if(!g.cam&&P_.inside){
+  if(!g.cam&&P_.inside&&!P_.touch){
     const fx=P_.x/CW,fy=P_.y/CH;
     if(fx<.22)g.pan-=(.22-fx)/.22*1250*dt;else if(fx>.78)g.pan+=(fx-.78)/.22*1250*dt;
     g.pan=clamp(g.pan,0,640);g.panY=clamp(g.panY,0,80);
@@ -1831,14 +1868,17 @@ const OBJS=[
   {id:'ventLight',layer:'wall',c:[1116,215,26],act:()=>setLight('V')},
   {id:'fan',layer:'desk',c:[1290,520,76],act:()=>toggleFan()},
   {id:'monitor',layer:'desk',r:[536,410,268,196],act:()=>toggleCam()},
-  {id:'plush',layer:'desk',c:[930,575,30],act:()=>SFX.honk()}
+  {id:'plush',layer:'desk',c:[930,575,30],act:()=>SFX.honk()},
+  {id:'doorQL',layer:'wall',q:'L',act:()=>toggleDoor('L')},
+  {id:'doorQR',layer:'wall',q:'R',act:()=>toggleDoor('R')}
 ];
 function toLayer(px,py,layer){const V=view(),g=G,f=layer==='desk'?1.12:1,fy=layer==='desk'?1.3:1;return{x:(px-V.ox)/V.s+g.pan*f,y:(py-V.oy)/V.s+g.panY*fy};}
 function hitObj(px,py){
   for(const layer of['desk','wall']){const p=toLayer(px,py,layer);
     for(const o of OBJS){if(o.layer!==layer)continue;
       if(o.c&&(p.x-o.c[0])**2+(p.y-o.c[1])**2<=o.c[2]**2)return o;
-      if(o.r&&p.x>=o.r[0]&&p.x<=o.r[0]+o.r[2]&&p.y>=o.r[1]&&p.y<=o.r[1]+o.r[3])return o;}}
+      if(o.r&&p.x>=o.r[0]&&p.x<=o.r[0]+o.r[2]&&p.y>=o.r[1]&&p.y<=o.r[1]+o.r[3])return o;
+      if(o.q){const b=qBox(OFFQ[o.q]);if(p.x>=b[0]&&p.x<=b[0]+b[2]&&p.y>=b[1]&&p.y<=b[1]+b[3])return o;}}}
   return null;
 }
 function shutterQ(c,q,p,dark){
@@ -1958,7 +1998,7 @@ function roomLive(c,room){
   }
 }
 function camHud(){
-  const fs=hudFs(),m=18*DPR;
+  const fs=hudFs(),m=(IS_TOUCH?64:18)*DPR;
   ctx.font=`bold ${fs}px "Courier New", Courier, monospace`;ctx.textBaseline='alphabetic';ctx.shadowColor='rgba(0,0,0,.9)';ctx.shadowBlur=4*DPR;ctx.textAlign='left';
   if((T%1.2)<.75)E(ctx,m+fs*.38,m+fs*.62,fs*.32,fs*.32,'#d2281c');
   ctx.fillStyle='#d9cfb7';ctx.fillText('REC',m+fs*.95,m+fs);
@@ -2143,7 +2183,7 @@ function vRing(){
   ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.lineWidth=3*DPR;ctx.strokeStyle='rgba(217,207,183,.22)';ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.stroke();
   if(p>0){ctx.strokeStyle='#d9982f';ctx.beginPath();ctx.arc(x,y,r,-Math.PI/2,-Math.PI/2+p*TAU);ctx.stroke();}
   ctx.font=`bold ${Math.round(13*DPR)}px "Courier New", monospace`;ctx.fillStyle='rgba(217,207,183,.85)';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('V',x,y+1);
-  ctx.font=`${Math.round(13*DPR)}px Georgia, serif`;ctx.textAlign='right';ctx.fillStyle='rgba(217,207,183,.6)';ctx.fillText(t('skipV'),x-r-10*DPR,y);ctx.restore();
+  ctx.font=`${Math.round(13*DPR)}px Georgia, serif`;ctx.textAlign='right';ctx.fillStyle='rgba(217,207,183,.6)';ctx.fillText(t(IS_TOUCH?'skipT':'skipV'),x-r-10*DPR,y);ctx.restore();
 }
 function rrect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();}
 /* ---------- stanza delle impostazioni: schermo sul tavolo ---------- */
@@ -2361,9 +2401,29 @@ function buildGuide(){
   const tips=$('#tips');tips.textContent='';for(const k of['tip1','tip2','tip3','tip4','tip5','tip6','tip7','tip8']){const p=document.createElement('p');p.textContent=t(k);tips.appendChild(p);}
 }
 function buildLegend(){const lg=$('#legend');lg.textContent='';for(const k of CAMS){const d=document.createElement('div');const b=document.createElement('b');b.textContent='CAM '+ROOMS[k];d.append(b,document.createTextNode(roomName(k)));lg.appendChild(d);}const d=document.createElement('div');const b=document.createElement('b');b.textContent=t('you');d.append(b,document.createTextNode(t('officeLong')));lg.appendChild(d);}
+/* ---------- controlli touch (solo dispositivi touch) ---------- */
+function setupTouchUI(){
+  const tap=(id,fn)=>$('#'+id).addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();initAudio();if(mode==='game'&&G)fn();});
+  tap('tDoorL',()=>toggleDoor('L'));tap('tDoorR',()=>toggleDoor('R'));tap('tVent',()=>toggleVent());tap('tFan',()=>toggleFan());
+  const torch=$('#tTorch');
+  torch.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();initAudio();if(mode==='game'&&G)setTorch(!G.torch);});
+  const ex=$('#tExit');
+  ex.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();if(mode==='game'&&!escHeld)escHeld=performance.now();});
+  for(const ev of['pointerup','pointercancel','pointerleave'])ex.addEventListener(ev,()=>{escHeld=null;});
+  for(const b of document.querySelectorAll('#touchUI .tbtn'))b.addEventListener('contextmenu',e=>e.preventDefault());
+}
+let lastIngame=null;
+function syncTouchUI(){
+  if(!IS_TOUCH)return;
+  const ing=mode==='game'&&!!G;if(ing!==lastIngame){document.body.classList.toggle('ingame',ing);lastIngame=ing;}
+  if(!ing)return;
+  const st=[['tDoorL',G.doorL],['tDoorR',G.doorR],['tVent',G.ventC],['tFan',G.fan],['tTorch',G.torch]];
+  for(const [id,on] of st){const el=document.getElementById(id);if(el&&el.classList.contains('on')!==!!on)el.classList.toggle('on',!!on);}
+}
 function applyI18n(){
   document.documentElement.lang=LANG;
   document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  if(IS_TOUCH)$('#hint').textContent=t('audioHintT');
   updateContSub();
 }
 function setLang(code){
@@ -2445,13 +2505,23 @@ addEventListener('keydown',e=>{
   else if(/^[0-9]$/.test(k)&&G.cam){switchCam(CAMS[k==='0'?9:parseInt(k,10)-1]);}
 });
 addEventListener('keyup',e=>{if(e.key==='Escape')escHeld=null;if((e.key==='z'||e.key==='Z')&&G)setTorch(false);if(e.key==='v'||e.key==='V')vHeld=null;});
-addEventListener('pointermove',e=>{P_.x=e.clientX*DPR;P_.y=e.clientY*DPR;P_.inside=true;});
+addEventListener('pointermove',e=>{
+  if(e.target&&e.target.closest&&e.target.closest('.tbtn'))return;
+  P_.x=e.clientX*DPR;P_.y=e.clientY*DPR;P_.inside=true;P_.touch=e.pointerType==='touch';
+  if(TOUCH&&e.pointerId===TOUCH.id&&G&&mode==='game'&&!G.cam){const dx=e.clientX-TOUCH.x0;if(Math.abs(dx)>10)TOUCH.moved=true;if(TOUCH.moved){const V=view();G.pan=clamp(TOUCH.pan0-dx*DPR/V.s*1.3,0,640);}}
+});
+addEventListener('pointerup',e=>{
+  if(e.pointerType!=='mouse')vHeld=null;
+  if(TOUCH&&e.pointerId===TOUCH.id){const o=TOUCH.obj;if(!TOUCH.moved&&o&&G&&mode==='game'&&!G.cam&&!G.mask&&(canAct()||o.id==='plush'))o.act();TOUCH=null;}
+});
+addEventListener('pointercancel',e=>{TOUCH=null;if(e.pointerType!=='mouse')vHeld=null;});
+addEventListener('touchstart',()=>initAudio(),{capture:true,passive:true});
 document.addEventListener('pointerleave',()=>{P_.inside=false;});
 addEventListener('blur',()=>{P_.inside=false;escHeld=null;});
 addEventListener('pointerdown',()=>initAudio(),{capture:true});
 cv.addEventListener('pointerdown',e=>{
-  P_.x=e.clientX*DPR;P_.y=e.clientY*DPR;P_.inside=true;
-  if(mode==='cutscene'||mode==='intro')return;
+  P_.x=e.clientX*DPR;P_.y=e.clientY*DPR;P_.inside=true;P_.touch=e.pointerType==='touch';
+  if(mode==='cutscene'||mode==='intro'){if(e.pointerType!=='mouse'&&!vHeld)vHeld=performance.now();return;}
   if(mode!=='game'||!G||stack.length)return;
   const px=P_.x,py=P_.y;
   for(const b of(G.bars||[])){if(px>=b.x&&px<=b.x+b.w&&py>=b.y-6*DPR&&py<=b.y+b.h){if(!b.dis)b.act();return;}}
@@ -2464,7 +2534,9 @@ cv.addEventListener('pointerdown',e=>{
     return;
   }
   if(G.cam||G.mask)return;
-  const o=hitObj(px,py);if(o&&(canAct()||o.id==='plush'))o.act();
+  const o=hitObj(px,py);
+  if(e.pointerType==='touch'){TOUCH={id:e.pointerId,x0:e.clientX,pan0:G.pan,moved:false,obj:o};return;}
+  if(o&&(canAct()||o.id==='plush'))o.act();
 });
 document.addEventListener('visibilitychange',()=>{if(G)G.frozen=document.hidden;escHeld=null;});
 addEventListener('resize',resize);
@@ -2477,6 +2549,7 @@ function init(){
   buildBG();
   const t2=$('#title .t2'),txt='Under Ground',r=rng(7);t2.textContent='';
   [...txt].forEach((ch,i)=>{const s=document.createElement('span');s.textContent=ch===' '?' ':ch;s.style.transform=`translateY(${(r()*.14).toFixed(3)}em) rotate(${((r()-.5)*5).toFixed(2)}deg)`;if(i===8)s.className='flk';t2.appendChild(s);});
+  if(IS_TOUCH)document.body.classList.add('touch');setupTouchUI();
   applyI18n();buildSettings();buildGuide();applyBright();resize();
   mode='intro';INTRO={t:0,cues:{}};showScreen(null);
   let last=performance.now();
@@ -2484,13 +2557,14 @@ function init(){
     const dt=Math.min(.05,Math.max(0,(ts-last)/1000));last=ts;T+=dt;
     try{
       TRANS=Math.max(0,TRANS-dt*2.4);
-      if(mode==='intro')updateIntro(dt);
+      syncTouchUI();
+      if(mode==='intro'){if(!portraitTouch())updateIntro(dt);}
       else if(mode==='menu')updateMenu(dt);
       else if(mode==='backstage')updateBackstage(dt);
-      else if(mode==='cutscene')updateCutscene(dt);
+      else if(mode==='cutscene'){if(!portraitTouch())updateCutscene(dt);}
       else if(mode==='game'&&G){
         if(escHeld&&performance.now()-escHeld>=2000){escHeld=null;goMenu();}
-        else if(!G.frozen){updateGame(dt);
+        else if(!G.frozen&&!portraitTouch()){updateGame(dt);
           if(mode==='game'){hoverObj=(!G.cam&&!G.mask&&P_.inside)?hitObj(P_.x,P_.y):null;const onBar=(G.bars||[]).some(b=>P_.x>=b.x&&P_.x<=b.x+b.w&&P_.y>=b.y-6*DPR&&P_.y<=b.y+b.h)||(G.cam&&[...(G.sysBtns||[]),G.resetBtn,...(G.schemBtns||[]),...(G.mapBtns||[])].some(hoverR));cv.style.cursor=(hoverObj||onBar)?'pointer':'';}}
       }
       else if(mode==='jumpscare'&&J){J.t+=dt;if(J.t>1.7){mode='over';$('#overText').textContent=t('foundBy',{name:monName(J.id)});$('#overNight').textContent=(lastNight==='custom'?t('nC'):t('night',{n:lastNight}))+', '+hourLabel()+'.';openPanel('p-over');}}
